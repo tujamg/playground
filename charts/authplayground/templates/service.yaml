@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ template "authplayground.fullname" . }}
+  labels:
+    app: {{ template "authplayground.name" . }}
+    chart: {{ template "authplayground.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    app: {{ template "authplayground.name" . }}
+    release: {{ .Release.Name }}
